@@ -27,7 +27,6 @@ public class ErrorValidationsTest extends BaseTest {
 
 	}
 	
-
 	@Test
 	public void ProductErrorValidation() throws IOException, InterruptedException
 	{
