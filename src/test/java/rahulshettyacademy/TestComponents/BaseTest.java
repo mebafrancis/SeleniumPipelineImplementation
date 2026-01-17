@@ -21,7 +21,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,8 +50,14 @@ public class BaseTest {
 		if (browserName.contains("chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			WebDriverManager.chromedriver().setup();
+			// avoid common Chrome errors (remote origin, CI environments)
+			options.addArguments("--remote-allow-origins=*");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--disable-gpu");
+			// support headless mode when specified (use new headless flag for modern Chrome)
 			if(browserName.contains("headless")){
-			options.addArguments("headless");
+				options.addArguments("--headless=new");
 			}		
 			driver = new ChromeDriver(options);
 			driver.manage().window().setSize(new Dimension(1440,900));//full screen
@@ -110,7 +115,7 @@ public class BaseTest {
 		  landingPage = new LandingPage(driver);
 		landingPage.goTo();
 		return landingPage;
-	
+		
 		
 	}
 	
@@ -118,6 +123,8 @@ public class BaseTest {
 	
 	public void tearDown()
 	{
-		driver.close();
+		if(driver!=null) {
+			driver.quit();
+		}
 	}
 }
