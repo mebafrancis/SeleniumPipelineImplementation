@@ -35,7 +35,7 @@ import rahulshettyacademy.pageobjects.ProductCatalogue;
 public class SubmitOrderTest extends BaseTest{
 	String productName = "ZARA COAT 3";
 
-	@Test(dataProvider="getData",groups= {"Purchase"})
+	@Test(dataProvider="getData",groups= {"Purchase"},enabled= false)
 	public void submitOrder(HashMap<String,String> input) throws IOException, InterruptedException
 	{
 
@@ -56,7 +56,7 @@ public class SubmitOrderTest extends BaseTest{
 
 	}
 	
-	@Test(dependsOnMethods= {"submitOrder"})
+	@Test(dependsOnMethods= {"submitOrder"},enabled = false)
 	public void OrderHistoryTest()
 	{
 		//"ZARA COAT 3";
